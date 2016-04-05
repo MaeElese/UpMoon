@@ -47,29 +47,3 @@ function getUser($access_token){
 }
 
 ?>
-<!DOCTYPE html>
-<head>
-    <title>jawbone-oauth-php</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container <?php echo $error ? "hide" : ""; ?>">
-    <div class="row">
-        <h2>Token</h2>
-        <pre><?php echo print_r($json, true); ?></pre>
-    </div>
-
-    <div class="row">
-        <h2>User</h2>
-        <pre><?php echo print_r($user, true); ?></pre>
-    </div>
-</div><!-- /.container -->
-
-<div class="container <?php echo !$error ? "hide" : ""; ?>">
-    <h2>Error</h2>
-    <p>could not complete the request</p>
-    <a href="connect.php" class="btn btn-primary">Try again</a>
-</div><!-- /.container -->
-</body>
-</html>
