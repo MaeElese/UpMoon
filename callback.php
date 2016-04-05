@@ -23,8 +23,10 @@ if(isset($_GET['error']) || !isset($_GET['code']) || empty($_GET['code'])){
 
     if(isset($json['access_token'])){
         $user = getUser($json['access_token']);
+        $sleeps = getSleep($json['access_token']);
     }else{
         $user = array();
+        $sleeps = array();
     }
 }
 /**
@@ -46,6 +48,21 @@ function getUser($access_token){
     return $user['data'];
 }
 
+function getSleep($access_token){
+    $url = "https://jawbone.com/nudge/api/v.1.0/users/@me/sleeps";
+
+    $opts = array(
+        'http'=>array(
+            'method'=>"GET",
+            'header'=>"Authorization: Bearer {$access_token}\r\n"
+        )
+    );
+    $context = stream_context_create($opts);
+    $response = file_get_contents($url, false, $context);
+    $sleeps = json_decode($response, true);
+    return $sleeps['data'];
+}
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -63,6 +80,11 @@ function getUser($access_token){
     <div class="row">
         <h2>User</h2>
         <pre><?php echo print_r($user, true); ?></pre>
+    </div>
+
+    <div class="row">
+        <h2>Sleep</h2>
+        <pre><?php echo print_r($sleeps, true); ?></pre>
     </div>
 </div><!-- /.container -->
 
