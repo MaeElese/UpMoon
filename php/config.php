@@ -11,7 +11,7 @@
  */
 $client_id      = '8Js4ZTEMnD4';
 $client_secret  = '16227963ad13cb5f64d6f90076570b3e0583106c';
-$redirect_uri   = 'http://localhost:63342/UpMoon/php/callback.php';
+$redirect_uri   = 'http://localhost/UpMoon/index.php?page=callback';
 $scopes[] = "basic_read";
 $scopes[] = "extended_read";
 $scopes[] = "location_read";

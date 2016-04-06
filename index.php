@@ -8,5 +8,6 @@
 require_once "class/mapper.php";
 require_once "class/controller/startController.php";
 require_once "class/controller/connectController.php";
+require_once "class/controller/callbackController.php";
 
 new mapper();

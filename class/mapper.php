@@ -8,7 +8,7 @@
  */
 class mapper
 {
-    private $whitelist = array("start", "connect");
+    private $whitelist = array("start", "connect", "callback");
 
     function __construct()
     {

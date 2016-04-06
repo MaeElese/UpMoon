@@ -5,7 +5,6 @@
  * Date: 01.04.2016
  * Time: 12:19
  */
-require 'config.php';
 $error = false;
 if(isset($_GET['error']) || !isset($_GET['code']) || empty($_GET['code'])){
     $error = true;
@@ -24,9 +23,13 @@ if(isset($_GET['error']) || !isset($_GET['code']) || empty($_GET['code'])){
     if(isset($json['access_token'])){
         $user = getUser($json['access_token']);
         $sleeps = getSleep($json['access_token']);
-    }else{
+        $currentSleeps = getCurrentSleep($json['access_token'], $sleeps);
+    }
+        else{
         $user = array();
         $sleeps = array();
+        $currentSleeps = array();
+
     }
 }
 /**
@@ -62,27 +65,21 @@ function getSleep($access_token){
     $sleeps = json_decode($response, true);
     return $sleeps['data'];
 }
+function getCurrentSleep($access_token, $sleeps){
+    $xid = $sleeps["items"]['0']['xid'];
+    $url1 = 'https://jawbone.com/nudge/api/v.1.1/sleeps/';
+    $url = $url1 . $xid;
+    $opts = array(
+        'http'=>array(
+            'method'=>"GET",
+            'header'=>"Authorization: Bearer {$access_token}\r\n"
+        )
+    );
+    $context = stream_context_create($opts);
+    $response = file_get_contents($url, false, $context);
+    $currentSleeps = json_decode($response, true);
+    return $currentSleeps['data'];
+}
 
-?>
-<!DOCTYPE html>
-<head>
-    <title>jawbone-oauth-php</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container <?php echo $error ? "hide" : ""; ?>">
-     <div class="row">
-        <h2>Sleep</h2>
-        <pre><?php echo print_r($sleeps, true);
-            ?></pre>
-    </div>
-</div><!-- /.container -->
 
-<div class="container <?php echo !$error ? "hide" : ""; ?>">
-    <h2>Error</h2>
-    <p>could not complete the request</p>
-    <a href="connect.php" class="btn btn-primary">Try again</a>
-</div><!-- /.container -->
-</body>
-</html>
+
