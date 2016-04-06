@@ -72,19 +72,10 @@ function getSleep($access_token){
 </head>
 <body>
 <div class="container <?php echo $error ? "hide" : ""; ?>">
-    <div class="row">
-        <h2>Token</h2>
-        <pre><?php echo print_r($json, true); ?></pre>
-    </div>
-
-    <div class="row">
-        <h2>User</h2>
-        <pre><?php echo print_r($user, true); ?></pre>
-    </div>
-
-    <div class="row">
+     <div class="row">
         <h2>Sleep</h2>
-        <pre><?php echo print_r($sleeps, true); ?></pre>
+        <pre><?php echo print_r($sleeps, true);
+            ?></pre>
     </div>
 </div><!-- /.container -->
 
