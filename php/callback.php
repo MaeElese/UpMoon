@@ -21,12 +21,30 @@ if(isset($_GET['error']) || !isset($_GET['code']) || empty($_GET['code'])){
     $json = json_decode($body, true);
 
     if(isset($json['access_token'])){
+        //User Information
         $user = getUser($json['access_token']);
+        //Allgemeine Sleeplist
         $sleeps = getSleep($json['access_token']);
+        //Aktuelle Sleeplist aus dem 0. Array von Sleeps geholte xId
         $currentSleeps = getCurrentSleep($json['access_token'], $sleeps);
+        //Aktueller Schlafgraph
         $image = getImage($currentSleeps);
+        //Mond-API-Abruf
         $currentMoon = getMoon($currentSleeps);
+        //Display auf Grundlage Moon-API
         $displayMoon = displayMoon($currentMoon, $currentSleeps);
+        //Aktuelles Datum des Schlafs
+        $date = currentSleepDate($currentSleeps);
+        //Aktuelle Länge des Schlafs
+        $length = currentSleepLength($currentSleeps);
+        //Zielerreichung
+        $quality = currentSleepQuality($currentSleeps);
+        //Moon-Details
+        $age = getMoonAge($currentMoon);
+        $stage = getMoonStage($currentMoon);
+        $illumination = getMoonLight($currentMoon);
+        //Beeinflussung
+        $influence = calculateInfluence($currentSleeps, $currentMoon);
     }
         else{
         $user = array();
@@ -92,6 +110,20 @@ function getImage($currentSleeps){
     $image= $url1 . $url2;
     return $image;
 }
+function currentSleepDate ($currentSleeps){
+    $stamp = $currentSleeps['time_created'];
+    $date = date("d.m.Y", $stamp);
+    return $date;
+}
+function currentSleepLength ($currentSleeps){
+    $length = $currentSleeps['title'];
+    return $length;
+}
+function currentSleepQuality ($currentSleeps)
+{
+    $quality = $currentSleeps['details']['quality'];
+    return $quality;
+}
 function getMoon($currentSleeps){
     $moon = ('http://api.burningsoul.in/moon/');
     $time = $currentSleeps['time_created'];
@@ -120,4 +152,26 @@ function displayMoon ($currentMoon, $currentSleep){
         return('<img src="images/fullmoon.png" >');
     }
 }
-
+function getMoonStage ($currentMoon){
+    $stage = $currentMoon['stage'];
+    return $stage;
+}
+function getMoonAge ($currentMoon){
+    $age = $currentMoon['age'];
+    return $age;
+}
+function getMoonLight ($currentMoon)
+{
+    $illumination = $currentMoon['illumination'];
+    return $illumination;
+}
+function calculateInfluence ($currentSleep, $currentMoon){
+    $illumination = $currentMoon['illumination'];
+    $goal = $currentSleep['details']['quality'];
+    if ($illumination >= 60 && $goal <=60){
+        return ('<p> Dein Schlaf war wahrscheinlich beeinflusst</p>');
+    }
+    elseif ($illumination <= 60 && $goal >=60){
+        return ('<p> Dein Schlaf war wahrscheinlich nicht beeinflusst</p>');
+    }
+}

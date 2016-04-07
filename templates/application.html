@@ -1,40 +1,37 @@
-
-
 <div class="container">
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-4">
     <h2>Sleep</h2>
     <img src={$image} />
-    <p><br>Datum: {$date}<br>
-    Schlafzeit: {$length}<br>
-    Zielerreichung: {$goal}</p>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <h2>Moon</h2><br><br>
         {$moonimage}
-        <br>
-        <br>
-        <br>
-        <br>
-        <h4>Beeinflussung</h4>
+     </div>
+    <div class="col-md-3">
+        <h2>Beeinflussung</h2>
+        {$influence}
+        <br><br>
+        <h3>Wie empfandest du deinen Schlaf?</h3>
+        <button id="mood" type="button" class="btn btn-primary">Stimmungslage angeben</button>
     </div>
-    <div class="col-md-2">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <p><br>Stand: {$stage)<br>
-        Alter: {$age}<br>
-        Helligkeit: {$illumination}</p>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
         <button id="back" type="button" class="btn btn-primary">Ausloggen</button>
     </div>
 </div>
+    <div class="row">
+        <div class="col-md-4">
+        <p><br>Schlafzeit {$length}<br>
+            Datum: {$date}<br>
+            Qualität (in %): {$quality}</p>
+        </div>
+        <div class="col-md-4">
+            <p><br>Stand (waning/waxing): {$stage} <br>
+                Alter (in Tagen): {$age}<br>
+                Helligkeit (in %): {$illumination}</p>
+        </div>
+
+    </div>
     <div class="row">
         <div class="col-md-12">
             <br>
