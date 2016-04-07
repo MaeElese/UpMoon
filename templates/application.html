@@ -2,18 +2,55 @@
 
 <div class="container">
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
     <h2>Sleep</h2>
     <img src={$image} />
     <p><br>Datum: {$date}<br>
     Schlafzeit: {$length}<br>
     Zielerreichung: {$goal}</p>
     </div>
-    <div class="col-md-6">
-        <h2>Moon</h2>
+    <div class="col-md-3">
+        <h2>Moon</h2><br><br>
         {$moonimage}
+        <br>
+        <br>
+        <br>
+        <br>
+        <h4>Beeinflussung</h4>
+    </div>
+    <div class="col-md-2">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><br>Stand: {$stage)<br>
+        Alter: {$age}<br>
+        Helligkeit: {$illumination}</p>
+    </div>
+    <div class="col-md-2">
+        <button id="back" type="button" class="btn btn-primary">Ausloggen</button>
     </div>
 </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <br>
+            <h4>Tag wechseln</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        <button id="back" type="button" class="btn btn-primary">Tag zuvor</button>
+    </div>
+        <div class="col-md-1">
+            <button id="forward" type="button" class="btn btn-primary">Tag darauf</button>
+        </div>
+    </div>
+
 </div><!-- /.container -->
 <!--
 <div class="container">
