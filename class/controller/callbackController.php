@@ -15,7 +15,8 @@ class callbackController
         require "php/callback.php";
         $this->template = file_get_contents('templates/layout.html');
         $content = file_get_contents('templates/application.html');
-        $content = str_replace('{$sleeps}', $sleeps["items"]['0']['xid'] , $content);
+        $content = str_replace('{$image}', $image , $content);
+        $content = str_replace('{$moonimage}', $displayMoon , $content);
         $this->template = str_replace('{$content}', $content, $this->template);
     }
     

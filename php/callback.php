@@ -24,12 +24,17 @@ if(isset($_GET['error']) || !isset($_GET['code']) || empty($_GET['code'])){
         $user = getUser($json['access_token']);
         $sleeps = getSleep($json['access_token']);
         $currentSleeps = getCurrentSleep($json['access_token'], $sleeps);
+        $image = getImage($currentSleeps);
+        $currentMoon = getMoon($currentSleeps);
+        $displayMoon = displayMoon($currentMoon, $currentSleeps);
     }
         else{
         $user = array();
         $sleeps = array();
         $currentSleeps = array();
-
+            $image = "no image";
+            $currentMoon = "no date available";
+            $displayMoon = "no image available";
     }
 }
 /**
@@ -81,5 +86,38 @@ function getCurrentSleep($access_token, $sleeps){
     return $currentSleeps['data'];
 }
 
+function getImage($currentSleeps){
+    $url1 = 'https://jawbone.com/';
+    $url2 = $currentSleeps['snapshot_image'];
+    $image= $url1 . $url2;
+    return $image;
+}
+function getMoon($currentSleeps){
+    $moon = ('http://api.burningsoul.in/moon/');
+    $time = $currentSleeps['time_created'];
+    $currentMoonUrl = $moon . $time;
+    $moonJson = file_get_contents($currentMoonUrl);
+    $currentMoon = json_decode($moonJson, true);
+    return $currentMoon;
+}
 
+function displayMoon ($currentMoon, $currentSleep){
+    $stage = $currentMoon['stage'];
+    $newmoon = $currentMoon['FM']['UT'];
+    $fullmoon = $currentMoon['NNM']['UT'];
+    $time = $currentSleep['time_created'];
+
+    if ($stage === 'waning' && $newmoon != $time && $fullmoon != $time ){
+        return('<img src="images/waning.png" >');
+    }
+    elseif ($stage === 'waxing' && $newmoon != $time && $fullmoon != $time ){
+        return('<img src="images/waxing.png" >');
+    }
+    elseif ($newmoon == $time){
+        return('<img src="images/newmoon.png" >');
+    }
+    elseif ($fullmoon == $time ){
+        return('<img src="images/fullmoon.png" >');
+    }
+}
 

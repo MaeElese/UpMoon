@@ -7,14 +7,14 @@
         <h2>User</h2>
         <pre><?php echo print_r($user, true); ?></pre>
     </div>
-//<!DOCTYPE html>
-//<head>
-//   <title>jawbone-oauth-php</title>
-//   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-//    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-//</head>
-//<body>
-//<div class="container <?php echo $error ? "hide" : ""; ?>">
+<!DOCTYPE html>
+<head>
+   <title>jawbone-oauth-php</title>
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container <?php echo $error ? "hide" : ""; ?>">
     <div class="row">
         <h2>Sleep</h2>
         <pre><?php echo print_r($currentSleeps, true);
