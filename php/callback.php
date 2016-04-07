@@ -89,19 +89,52 @@ function getSleep($access_token){
     return $sleeps['data'];
 }
 function getCurrentSleep($access_token, $sleeps){
-    $xid = $sleeps["items"]['0']['xid'];
-    $url1 = 'https://jawbone.com/nudge/api/v.1.1/sleeps/';
-    $url = $url1 . $xid;
-    $opts = array(
-        'http'=>array(
-            'method'=>"GET",
-            'header'=>"Authorization: Bearer {$access_token}\r\n"
-        )
-    );
-    $context = stream_context_create($opts);
-    $response = file_get_contents($url, false, $context);
-    $currentSleeps = json_decode($response, true);
-    return $currentSleeps['data'];
+    if(isset($_GET['dateId'])){
+        if(isset($sleeps["items"][$_GET['dateId']]['xid'])){
+            $xid = $sleeps["items"][$_GET['dateId']]['xid'];
+            $url1 = 'https://jawbone.com/nudge/api/v.1.1/sleeps/';
+            $url = $url1 . $xid;
+            $opts = array(
+                'http'=>array(
+                    'method'=>"GET",
+                    'header'=>"Authorization: Bearer {$access_token}\r\n"
+                )
+            );
+            $context = stream_context_create($opts);
+            $response = file_get_contents($url, false, $context);
+            $currentSleeps = json_decode($response, true);
+            return $currentSleeps['data'];
+        }else{
+            $xid = $sleeps["items"]['0']['xid'];
+            $url1 = 'https://jawbone.com/nudge/api/v.1.1/sleeps/';
+            $url = $url1 . $xid;
+            $opts = array(
+                'http'=>array(
+                    'method'=>"GET",
+                    'header'=>"Authorization: Bearer {$access_token}\r\n"
+                )
+            );
+            $context = stream_context_create($opts);
+            $response = file_get_contents($url, false, $context);
+            $currentSleeps = json_decode($response, true);
+            return $currentSleeps['data'];
+        }
+    }else{
+        $xid = $sleeps["items"]['0']['xid'];
+        $url1 = 'https://jawbone.com/nudge/api/v.1.1/sleeps/';
+        $url = $url1 . $xid;
+        $opts = array(
+            'http'=>array(
+                'method'=>"GET",
+                'header'=>"Authorization: Bearer {$access_token}\r\n"
+            )
+        );
+        $context = stream_context_create($opts);
+        $response = file_get_contents($url, false, $context);
+        $currentSleeps = json_decode($response, true);
+        return $currentSleeps['data'];
+    }
+
 }
 
 function getImage($currentSleeps){
@@ -167,11 +200,11 @@ function getMoonLight ($currentMoon)
 }
 function calculateInfluence ($currentSleep, $currentMoon){
     $illumination = $currentMoon['illumination'];
-    $goal = $currentSleep['details']['quality'];
-    if ($illumination >= 60 && $goal <=60){
+    $quality = $currentSleep['details']['quality'];
+    if ($illumination >= 60 && $quality <=60){
         return ('<p> Dein Schlaf war wahrscheinlich beeinflusst</p>');
     }
-    elseif ($illumination <= 60 && $goal >=60){
+    elseif ($illumination <= 60 && $quality >=60){
         return ('<p> Dein Schlaf war wahrscheinlich nicht beeinflusst</p>');
     }
 }
