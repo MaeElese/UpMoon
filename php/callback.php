@@ -45,6 +45,8 @@ if(isset($_GET['error']) || !isset($_GET['code']) || empty($_GET['code'])){
         $illumination = getMoonLight($currentMoon);
         //Beeinflussung
         $influence = calculateInfluence($currentSleeps, $currentMoon);
+        $user_xid = getUserXId($user);
+        $sleep_xid = getSleepXId($currentSleeps);
     }
         else{
         $user = array();
@@ -73,7 +75,10 @@ function getUser($access_token){
     $user = json_decode($response, true);
     return $user['data'];
 }
-
+function getUserXId($user){
+    $user_xid = $user['xid'];
+    return $user_xid;
+}
 function getSleep($access_token){
     $url = "https://jawbone.com/nudge/api/v.1.0/users/@me/sleeps";
 
@@ -135,6 +140,10 @@ function getCurrentSleep($access_token, $sleeps){
         return $currentSleeps['data'];
     }
 
+}
+function getSleepXId($currentSleeps){
+    $sleep_xid = $currentSleeps['xid'];
+    return $sleep_xid;
 }
 
 function getImage($currentSleeps){
